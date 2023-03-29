@@ -1,0 +1,416 @@
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+  <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet"/>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+  <link href="https://cdn.datatables.net/v/bs5/dt-1.13.4/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/cr-1.6.2/r-2.4.1/sb-1.4.1/sp-2.1.2/sl-1.6.2/datatables.min.css" rel="stylesheet"/>
+
+  <script src="https://cdn.datatables.net/v/bs5/dt-1.13.4/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/cr-1.6.2/r-2.4.1/sb-1.4.1/sp-2.1.2/sl-1.6.2/datatables.min.js"></script>
+
+  <script src="{% static 'd3_dots.js' %}"></script>
+  <script src="https://d3js.org/d3.v7.js"></script>
+  <script src="{% static 'd3_bar.js' %}"></script>
+  <style>
+    #example_wrapper {
+      visibility: hidden;
+    }
+    table {
+      font-size: 12px;
+    }
+    table.dataTable thead th {
+      background-color: #E9ECEF;
+    }
+    #example tbody tr:nth-of-type(odd),
+    #example tbody tr:nth-of-type(even) {
+        background-color: unset;
+    }
+    
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+      padding: 1px;
+      background: white;
+      color: white;
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+      background-color: #0c6cfc;
+    }
+    .dataTables_wrapper .dt-button-collection .buttons-columnVisibility .dt-button.active {
+      background-color: #E9ECEF;
+    }
+    .btn .btn-secondary .buttons-collection .dropdown-toggle .buttons-colvis {
+      background-color:  #E9ECEF;
+    }
+    .text-left {
+      text-align: left !important;
+      white-space: nowrap;
+    }
+    .buttons-collection .dt-button:first-child {
+      background-color: red !important;
+      color: white !important;
+    }
+    .buttons-csv {
+      background-color: #0c6cfc; !important;
+      color: white !important;
+    }
+    .upload-form button {
+      border-radius: 5px;
+      background: #E9ECEF;
+      border: 1px solid #CED4DA;
+    }
+    .bar {
+      fill: #0c6cfc;
+      stroke:  #000000;
+      stroke-width: 1px;
+    }
+    .bar:hover {
+      fill: #FFA500;
+      stroke: #000000;
+      stroke-width: 2px;
+    }
+    #chart-wrapper {
+      display: flex;
+      flex-direction: row;
+    }
+  
+    #chart-level-assign,
+    #chart-edu-setting
+    #chart-smd-scatter {
+      width: 33.33%;
+    }
+
+
+    #example th:nth-child(1) {
+      min-width: 5px;
+      width: 5px;
+      max-width: 5px;
+    }
+    #example th:nth-child(2) {
+      min-width: 60px;
+      width: 60px;
+    }
+    #example th:nth-child(3) {
+      min-width: 130px;
+      width: 130px;
+    }
+    #example th:nth-child(4) {
+      min-width: 130px;
+      width: 130px;
+    }
+    #example th:nth-child(5) {
+      min-width: 150px;
+      width: 150px;
+    }
+    #example th:nth-child(6) {
+      min-width: 80px;
+      width: 80px;
+    }
+
+
+
+
+
+
+
+
+
+    #example th:nth-child(7) {
+      min-width: 80px;
+      width: 80px;
+    }
+    #example th:nth-child(8) {
+      min-width: 80px;
+      width: 80px;
+    }
+    #example th:nth-child(9) {
+      min-width: 80px;
+      width: 80px;
+    }
+    #example th:nth-child(10) {
+      min-width: 80px;
+      width: 80px;
+    }
+    #example th:nth-child(11) {
+      min-width: 80px;
+      width: 80px;
+    }
+    #example th:nth-child(12) {
+      min-width: 80px;
+      width: 80px;
+    }
+    #example th:nth-child(13) {
+      min-width: 80px;
+      width: 80px;
+    }
+    #example th:nth-child(14) {
+      min-width: 80px;
+      width: 80px;
+    }
+    #example th:nth-child(15) {
+        min-width: 80px;
+        width: 80px;
+    }
+    #example th:nth-child(16) {
+      min-width: 80px;
+      width: 80px;
+    }
+    #example th:nth-child(17) {
+      min-width: 80px;
+      width: 80px;
+    }
+
+    text {
+      font-family: sand-serif;
+    }
+    .tick text{
+      color: #000000;
+      font-size: 1.2em;
+    }
+    #loading-indicator {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      z-index: 9999;
+      text-align: center;
+      padding-top: 20%;
+      background-image: url('/static/loading.gif');
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  
+  #loading-indicator img {
+      width: 100px;
+      height: 100px;
+  }
+
+  #chart-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 50px;
+    background: #FFFFFF;
+    padding-top: 25px;
+    padding-bottom: 50px;
+  }
+  #chart-level-assign {
+    width: 33.33%;
+    margin: 0;
+    padding: 0;
+  }
+  #chart-edu-setting {
+    width: 33.33%;
+    margin: 0;
+    padding: 0;
+  }
+  #chart-smd-scatter {
+    width: 33.33%;
+    margin: 0;
+    padding: 0;
+  }
+
+  </style>
+</head>
+
+<body>
+<div id="loading-indicator"></div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <form method="post" enctype="multipart/form-data" class="upload-form">
+        {% csrf_token %}
+        <div class="row mb-3">
+          <div class="col-md-6">
+            {{ form.json_file }}
+          </div>
+              <div class="col-md-6 d-flex align-items-left justify-content-end">
+                <button type="submit" name="upload_button" class="btn-primary">Upload</button>
+              </div>
+        </div>
+      </form>
+        {% if has_data %}
+        <br>
+        <div id="table-container">
+          <table id="example" class="display hover responsive">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>EPPI ID</th>
+                <th>Admin Strand</th>
+                <th>Country</th>
+                <th>Author</th>
+                <th>Title</th>
+                <th>Year</th>
+                <th>URL</th>
+                <th>Educational Setting</th>
+                <th>Publication Type</th>
+                <th>Level of Assignment</th>
+                <th>Student Gender</th>
+                <th>SMD (Toolkit)</th>
+                <th>SESMD (Toolkit)</th>
+                <th>SMD (Reading)</th>
+                <th>SESMD (Reading)</th>
+                <th>SMD (Science)</th>
+                <th>SESMD (Science)</th>
+              </tr>
+            </thead>
+              <tbody>
+                {% for data_object in data %}
+                <tr>
+                  <th>{{ forloop.counter }}</th>
+                  <td>{{ data_object.eppi_id }}</td>
+                  <td>{{ data_object.admin_strand_data }}</td>
+                  <td>{{ data_object.loc_country_raw }}</td>
+                  <td>{{ data_object.short_title }}</td>
+                  <td>{{ data_object.main_title }}</td>
+                  <td>{{ data_object.year }}</td>
+                  <td>{{ data_object.url }}</td>
+                  <td>{{ data_object.edu_setting_data }}</td>
+                  <td>{{ data_object.text_field }}</td>
+                  <td>{{ data_object.level_assign }}</td>
+                  <td>{{ data_object.student_gender }}</td>
+                  <td>{{ data_object.smd_value }}</td>
+                  <td>{{ data_object.sesmd_value }}</td>
+                  <td>{{ data_object.smd_red_value }}</td>
+                  <td>{{ data_object.sesmd_red_value }}</td>
+                  <td>{{ data_object.smd_sci_value }}</td>
+                  <td>{{ data_object.sesmd_sci_value }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="3">No data to display.</td>
+                </tr>
+                  {% endfor %}
+              </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        <div id="chart-wrapper">
+
+
+          <div id="chart-level-assign"></div>
+
+
+
+          <div id="chart-edu-setting"></div>
+          <div id="chart-smd-scatter"></div>
+        </div>
+
+        <br>
+        <br>
+        <br>test
+
+      <script type="text/javascript">
+        $(document).ready(function() {
+          $('form').submit(function() {
+            // Show the loading indicator
+            $('#loading-indicator').css('display', 'block');
+          });
+        
+          // Setup - add a text input to each footer cell
+          $('#table-container tfoot th').each(function() {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+          });
+        
+          // DataTable
+          var table = $('#table-container table').DataTable({
+            stripeClasses: [],
+            colReorder: true,
+            fixedColumns: false,
+            responsive: false,
+            paging: true,
+            scrollY: '40vh',
+            scrollX: true,
+            autoWidth: true,
+            pageLength: 15,
+            dom: 'Bfrtip',
+            buttons: [{
+                extend: 'colvis',
+                postfixButtons: ['colvisRestore'],
+                text: 'Column Selection'
+              },
+              {
+                text: 'Download CSV',
+                extend: 'csv',
+                exportOptions: {
+                  columns: ':visible'
+                }
+              }
+            ],
+            columnDefs: [
+              { targets: [5,7,8,9,10,11], visible: false },
+              { width: '60px', targets: 0, className: 'text-left' },
+            ],
+            initComplete: function() {
+              $('#loading-indicator').css('display', 'none');
+              $('#example_wrapper').css('visibility', 'visible');
+        
+              // Apply the search to each column
+              this.api().columns().every(function() {
+                var that = this;
+                $('input', this.footer()).on('keyup change clear', function() {
+                  if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                  }
+                });
+              });
+            }
+          });
+        });
+        
+      
+      </script>
+      
+      <script type="text/javascript">
+        // First chart
+        const assign_level_rawData = JSON.parse('{{ assign_levels|safe }}');
+        console.log(assign_level_rawData)
+        for (let i = 0; i < assign_level_rawData.length; i++) {
+          if (assign_level_rawData[i][0] === "N") {
+            assign_level_rawData[i][0] = "NA";
+          }
+        }
+        const data1 = assign_level_rawData.map(d => ({level_assign: d[0], count: d[1]}));
+        createChart(data1, "chart-level-assign", "Level of Assignment", "level_assign");
+        
+        // Second chart
+        const edu_setting_rawData = JSON.parse('{{ edu_setting_levels|safe }}');
+        for (let i = 0; i < edu_setting_rawData.length; i++) {
+          if (edu_setting_rawData[i][0] === "N") {
+            edu_setting_rawData[i][0] = "NA";
+          }
+        }
+        const data2 = edu_setting_rawData.map(d => ({edu_setting: d[0], count: d[1]}));
+        createChart(data2, "chart-edu-setting", "Educational Setting", "edu_setting");
+
+        // Third chart
+        const data3 = "{{ smd_combined_csv|escapejs }}";
+        const smd = d3.csvParse(data3).filter(d => d.smd_value !== "NA");
+        
+        const formattedData = smd.map(d => ({
+          smd_value: parseFloat(d.smd_value).toFixed(2),
+          sesmd_value: parseFloat(d.sesmd_value).toFixed(2)
+        }));
+        
+        console.log(formattedData);
+        drawDotChart(formattedData);
+      </script>
+
+</body>
+</html>
+{% endblock %}

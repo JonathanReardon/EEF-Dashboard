@@ -1,0 +1,22 @@
+from django.db import models
+
+class MyModel(models.Model):
+    index = models.BigAutoField(primary_key=True, db_column='index')
+    text_field = models.TextField()
+    edu_setting_data = models.TextField(default="")
+    level_assign = models.TextField()
+    student_gender = models.TextField()
+    eppi_id = models.TextField(default="")
+    short_title = models.TextField(default="")
+    main_title = models.TextField(default="")
+    year = models.TextField(default="")
+    abstract = models.TextField(default="")
+    admin_strand_data = models.TextField(default="")
+    url = models.TextField(default="")
+    smd_value = models.TextField(default="")
+    sesmd_value = models.TextField(default="")
+    smd_red_value = models.TextField(default="")
+    sesmd_red_value = models.TextField(default="")
+    smd_sci_value = models.TextField(default="")
+    sesmd_sci_value = models.TextField(default="")
+    loc_country_raw = models.TextField(default="")
