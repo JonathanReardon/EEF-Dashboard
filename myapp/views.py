@@ -9,6 +9,8 @@ import json
 import pandas as pd
 from toolz import interleave
 import numpy as np
+import re
+
 
 # Import local libraries
 from .codes import (
@@ -232,13 +234,43 @@ def upload_json(request):
             combined_df = pd.concat([tool_smd, tool_se], axis=1)
             smd_combined_csv = combined_df.to_csv(index=False)
 
+            #######################
+            #/ GET STUDY NUMBERS /#
+            #######################
+
+            study_num = len(eppi_id)
+
+            ####################################
+            #/ GET STUDENT GENDER DATA FOR D3 /#
+            ####################################
+
+            student_gender = student_gender.astype(str).groupby('student_gender').size().reset_index(name='value')
+            student_gender = student_gender.rename(columns={'student_gender': 'name'})
+            student_gender = student_gender.rename(columns={'value': 'count'})
+            total_count = student_gender['count'].sum()
+            student_gender['value'] = (student_gender['count'] / total_count) * 100
+            student_gender['value'] = round(student_gender['value'], 2)
+            student_gender = student_gender.drop('count', axis=1)
+            student_gender['name'] = student_gender['name'].str.strip('[]')
+            student_gender['name'] = student_gender['name'].str.replace("'", '"')
+
+            # Use the modified data dictionary
+            print(student_gender)
+            student_gender['name'] = student_gender['name'].str.replace(r'"', '')
+
+            student_gender = student_gender.to_json(orient='records')
+
+            print(student_gender)
+
             # Pass contentx to template for rendering
             context = {'form': form, 
                        'data': all_data, 
                        'has_data': has_data, 
                        'assign_levels': assign_levels, 
                        'edu_setting_levels': edu_setting_levels,
-                       'smd_combined_csv': smd_combined_csv}
+                       'smd_combined_csv': smd_combined_csv,
+                       'student_gender': student_gender,
+                       'study_num': study_num}
 
             return render(request, 'upload_json.html', context)
 

@@ -15,12 +15,17 @@
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
   <link href="https://cdn.datatables.net/v/bs5/dt-1.13.4/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/cr-1.6.2/r-2.4.1/sb-1.4.1/sp-2.1.2/sl-1.6.2/datatables.min.css" rel="stylesheet"/>
-
   <script src="https://cdn.datatables.net/v/bs5/dt-1.13.4/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/cr-1.6.2/r-2.4.1/sb-1.4.1/sp-2.1.2/sl-1.6.2/datatables.min.js"></script>
 
   <script src="{% static 'd3_dots.js' %}"></script>
   <script src="https://d3js.org/d3.v7.js"></script>
   <script src="{% static 'd3_bar.js' %}"></script>
+  <script src="{% static 'd3_pie.js' %}"></script>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'count.css' %}">
+
   <style>
     #example_wrapper {
       visibility: hidden;
@@ -66,6 +71,7 @@
       border-radius: 5px;
       background: #E9ECEF;
       border: 1px solid #CED4DA;
+      color: #000000;
     }
     .bar {
       fill: #0c6cfc;
@@ -115,14 +121,6 @@
       width: 80px;
     }
 
-
-
-
-
-
-
-
-
     #example th:nth-child(7) {
       min-width: 80px;
       width: 80px;
@@ -154,7 +152,7 @@
     #example th:nth-child(14) {
       min-width: 80px;
       width: 80px;
-    }
+    }a
     #example th:nth-child(15) {
         min-width: 80px;
         width: 80px;
@@ -241,6 +239,59 @@
               </div>
         </div>
       </form>
+
+
+<div class="page-wrapper">
+  <section class="one">
+      <div class="container">
+        <div class="block-title text-center">
+          <h2 class="title">Datafile Summary</h2>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="single">
+              <div class="inner">
+                <h3 class="count counter">{{ study_num }}</h3>
+                <p class="text">Studies</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="single">
+              <div class="inner">
+                <h3 class="count counter">11</h3>
+                <p class="text">Countries</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="single">
+              <div class="inner">
+                <h3 class="count counter">234</h3>
+                <p class="text">Effect sizes</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="single">
+              <div class="inner">
+                <h3 class="count counter">6000</h3>
+                <p class="text">Something else</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+<div class="block-title text-center">
+  <h2 class="title">Main Table</h2>
+</div>
+
         {% if has_data %}
         <br>
         <div id="table-container">
@@ -300,15 +351,12 @@
         {% endif %}
 
         <div id="chart-wrapper">
-
-
           <div id="chart-level-assign"></div>
-
-
-
           <div id="chart-edu-setting"></div>
           <div id="chart-smd-scatter"></div>
         </div>
+        <br>
+        <div id="chart-gender-pie"></div>
 
         <br>
         <br>
@@ -379,7 +427,6 @@
       <script type="text/javascript">
         // First chart
         const assign_level_rawData = JSON.parse('{{ assign_levels|safe }}');
-        console.log(assign_level_rawData)
         for (let i = 0; i < assign_level_rawData.length; i++) {
           if (assign_level_rawData[i][0] === "N") {
             assign_level_rawData[i][0] = "NA";
@@ -406,11 +453,53 @@
           smd_value: parseFloat(d.smd_value).toFixed(2),
           sesmd_value: parseFloat(d.sesmd_value).toFixed(2)
         }));
-        
-        console.log(formattedData);
         drawDotChart(formattedData);
+
+
+
+
+
+        // Fourth chart
+        const data4 = JSON.parse('{{ student_gender|safe }}');
+        console.log(typeof(data4));
+        console.log(data4);
+
+        // select the div element to append the svg
+        const container = d3.select('#chart-gender-pie');
+
+        chart = PieChart(data4, {
+          name: d => d.name,
+          value: d => d.value,
+          width: 740,
+          height: 500,
+          innerRadius: 100,
+          labelRadius: (100 * 1.4 + (Math.min(width, height) / 2) * 1),
+        })
+        
+
+        document.body.appendChild(chart);
+
       </script>
 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+      <script>
+        $(document).ready(function() {
+          // Call the Counter-Up plugin with the right options
+          $('.counter').counterUp({
+            delay: 10,
+            time: 1000
+          });
+      
+          // Trigger the Counter-Up animation when the element comes into view
+          $('.count').waypoint(function() {
+            $('.counter').counterUp({
+              delay: 10,
+              time: 1000
+            });
+          }, { offset: '100%' });
+        });
+      </script>
 </body>
 </html>
 {% endblock %}

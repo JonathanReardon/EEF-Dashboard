@@ -21,6 +21,24 @@ function drawDotChart(data) {
         .append("g")
             .attr("transform", `translate(${margin.left}, ${margin.top})`)
 
+    // add the styles for the grid lines and labels
+    svg.append('style')
+    .text(`
+        .grid line {
+          stroke: lightgrey;
+          stroke-opacity: 0.7;
+          shape-rendering: crispEdges;
+        }
+        
+        .grid path {
+          stroke-width: 0;
+        }
+        
+        .grid text {
+          font-size: 10px;
+        }
+    `);
+
 
     const xPadding = Math.abs(smdMax - smdMin) * 0.05;
     const yPadding = Math.abs(sesmdMax - sesmdMin) * 0.05;
