@@ -4,6 +4,10 @@
 <html>
 <head>
   <title>Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet"/>
@@ -31,7 +35,8 @@
       visibility: hidden;
     }
     table {
-      font-size: 12px;
+      font-size: 13px;
+      font-weight: 200;
     }
     table.dataTable thead th {
       background-color: #E9ECEF;
@@ -49,11 +54,29 @@
     .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
       background-color: #0c6cfc;
     }
-    .dataTables_wrapper .dt-button-collection .buttons-columnVisibility .dt-button.active {
-      background-color: #E9ECEF;
+    {% comment %} .dataTables_wrapper .dt-button-collection .buttons-columnVisibility .dt-button.active {
+      background-color: #000000;
     }
     .btn .btn-secondary .buttons-collection .dropdown-toggle .buttons-colvis {
       background-color:  #E9ECEF;
+    } {% endcomment %}
+
+    .dataTables_wrapper {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+    }
+
+
+    #table-container table thead th {
+      background-color: #f3f3f3;
+      color: #666;
+      font-size: .875em;
+      font-family: 'Lato', sans-serif;
+
+    }
+    #table-container table tbody {
+      font-family: 'Lato', sans-serif;
+
     }
     .text-left {
       text-align: left !important;
@@ -105,12 +128,12 @@
       width: 60px;
     }
     #example th:nth-child(3) {
-      min-width: 130px;
-      width: 130px;
+      min-width: 200px;
+      width: 200px;
     }
     #example th:nth-child(4) {
-      min-width: 130px;
-      width: 130px;
+      min-width: 200px;
+      width: 200px;
     }
     #example th:nth-child(5) {
       min-width: 150px;
@@ -120,30 +143,29 @@
       min-width: 80px;
       width: 80px;
     }
-
     #example th:nth-child(7) {
-      min-width: 80px;
-      width: 80px;
+      min-width: 100px;
+      width: 100px;
     }
     #example th:nth-child(8) {
-      min-width: 80px;
-      width: 80px;
+      min-width: 100px;
+      width: 100px;
     }
     #example th:nth-child(9) {
-      min-width: 80px;
-      width: 80px;
+      min-width: 100px;
+      width: 100px;
     }
     #example th:nth-child(10) {
-      min-width: 80px;
-      width: 80px;
+      min-width: 100px;
+      width: 100px;
     }
     #example th:nth-child(11) {
-      min-width: 80px;
-      width: 80px;
+      min-width: 100px;
+      width: 100px;
     }
     #example th:nth-child(12) {
-      min-width: 80px;
-      width: 80px;
+      min-width: 100px;
+      width: 100px;
     }
     #example th:nth-child(13) {
       min-width: 80px;
@@ -166,9 +188,7 @@
       width: 80px;
     }
 
-    text {
-      font-family: sand-serif;
-    }
+
     .tick text{
       color: #000000;
       font-size: 1.2em;
@@ -239,59 +259,68 @@
               </div>
         </div>
       </form>
+      
+<div class="checkers">
+  <div class="page-wrapper">
+    <section class="one">
+        <div class="container">
+          <div class="block-title text-center">
+            <h2 class="title">Datafile Summary</h2>
+          </div>
+          <br>
+          <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </p>
+          <div class="container">
+            <div class="row">
+                <div class="col-lg-3 d-flex justify-content-center">
+                    <div class="single">
+                        <div class="inner">
+                            <h3 class="count counter">{{ study_num }}</h3>
+                            <p class="text">Studies</p>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-lg-3 d-flex justify-content-center">
+              <div class="single">
+                <div class="inner">
+                  <h3 class="count counter">11</h3>
+                  <p class="text">Countries</p>
+                </div>
+              </div>
+            </div>
 
-<div class="page-wrapper">
-  <section class="one">
-      <div class="container">
-        <div class="block-title text-center">
-          <h2 class="title">Datafile Summary</h2>
+            <div class="col-lg-3 d-flex justify-content-center">
+              <div class="single">
+                <div class="inner">
+                  <h3 class="count counter">234</h3>
+                  <p class="text">Effect sizes</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 d-flex justify-content-center">
+              <div class="single">
+                <div class="inner">
+                  <h3 class="count counter">6000</h3>
+                  <p class="text">Something else</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <br>
-        <div class="row">
-          <div class="col-lg-3">
-            <div class="single">
-              <div class="inner">
-                <h3 class="count counter">{{ study_num }}</h3>
-                <p class="text">Studies</p>
-              </div>
-            </div>
-          </div>
+      </section>
+  </div>
 
-          <div class="col-lg-3">
-            <div class="single">
-              <div class="inner">
-                <h3 class="count counter">11</h3>
-                <p class="text">Countries</p>
-              </div>
-            </div>
-          </div>
 
-          <div class="col-lg-3">
-            <div class="single">
-              <div class="inner">
-                <h3 class="count counter">234</h3>
-                <p class="text">Effect sizes</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3">
-            <div class="single">
-              <div class="inner">
-                <h3 class="count counter">6000</h3>
-                <p class="text">Something else</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-</div>
 <div class="block-title text-center">
   <h2 class="title">Main Table</h2>
 </div>
-
+<br>
+<p>
+  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+</p>
         {% if has_data %}
         <br>
         <div id="table-container">
@@ -311,11 +340,11 @@
                 <th>Level of Assignment</th>
                 <th>Student Gender</th>
                 <th>SMD (Toolkit)</th>
-                <th>SESMD (Toolkit)</th>
+                <th>SE (Toolkit)</th>
                 <th>SMD (Reading)</th>
-                <th>SESMD (Reading)</th>
+                <th>SE (Reading)</th>
                 <th>SMD (Science)</th>
-                <th>SESMD (Science)</th>
+                <th>SE (Science)</th>
               </tr>
             </thead>
               <tbody>
@@ -420,8 +449,6 @@
             }
           });
         });
-        
-      
       </script>
       
       <script type="text/javascript">

@@ -1,6 +1,6 @@
 
 body{
-    font-family: "Inter",sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 .one{
@@ -15,7 +15,7 @@ body{
 
 .single{
     /* box-shadow: 0px 20px 60px 0px rgba(47, 2, 248, 0.01); */
-    box-shadow: 0px 20px 60px 0px rgba(108, 117, 125, 0.01);	
+    /* box-shadow: 0px 20px 60px 0px rgba(108, 117, 125, 0.01);	 */
     width: 220px;
     height: 220px;
     border-radius: 50%; 
@@ -34,17 +34,17 @@ body{
     left: 10px;
     right: 10px;
     border-radius: 50%;
-    background-image: linear-gradient(40deg, rgb(116, 114, 122) 0%, #0c6cfc 100%);
+    /* background-image: linear-gradient(40deg, #666 0%, #0c6cfc 100%); */
 
 }
 
 .inner{
     width: 100%;
     height: 100%;
-    box-shadow: 0px 20px 40px 0px ;
+    /* box-shadow: 0px 20px 40px 0px ; */
     border-radius: 50%;
     position: relative;
-    background-color: white;
+    background-color: #2b1010;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,7 +74,9 @@ body{
 }
 
 .title{
-    color: rgba(68,68,68,1);
+    color: #666;
     font-size: 44;
     font-weight: bold;
 }
+
+  
