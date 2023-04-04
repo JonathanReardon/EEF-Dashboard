@@ -18,8 +18,8 @@ function createChart(data, containerId, chartTitle, keyField) {
         .attr("y", 0)
         .attr("width", width)
         .attr("height", height)
-        .attr("fill", "#FFFFFF")
-        .style("fill", "EBEBEB");
+        .attr("fill", "#ff0000")
+        .style("fill", "#EBEBEB");
 
   
     const x = d3.scaleBand()

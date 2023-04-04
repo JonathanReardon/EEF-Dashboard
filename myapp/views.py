@@ -132,6 +132,15 @@ def upload_json(request):
             # Get toolkit primary outcome data
             tool_smd, tool_se = toolkit_prim_out_data(data)
 
+            ################################
+            # Get toolkit effect size count
+            ################################
+            tool_smd_count = 0
+            for cell in tool_smd:
+                if cell != "NA":
+                    tool_smd_count += 1
+            
+
             # Get Reading primary outcome data
             red_smd, red_se = reading_prim_out_data(data)
 
@@ -152,13 +161,28 @@ def upload_json(request):
             abstract_df = get_metadata(data, "Abstract", "abstract")
             country_df = get_data(data, countries, "loc_country_raw")
 
-            # THESE WORK TO RETAIN SQUARE BRACKETS BUT I CAN'T THEN PLOT THEM WITH D3 (NEED {})
-            # Retain square brackets where originally presented
-            """ country_df['loc_country_raw'] = country_df['loc_country_raw'].astype(str)
-            country_df['loc_country_raw'] = country_df['loc_country_raw'].str.replace("[", "[")
+            print(abstract_df)
 
-            admin_strand_data['admin_strand_data'] = admin_strand_data['admin_strand_data'].astype(str)
-            admin_strand_data['admin_strand_data'] = admin_strand_data['admin_strand_data'].str.replace("[", "[") """
+            ################################################
+            # Get the number of countries across the strand
+            ################################################
+
+            # Filter out rows with "NA" in the loc_country_raw column
+            country_df_list = country_df[country_df["loc_country_raw"] != "NA"]
+
+            # Convert the column to a list of strings
+            country_list = country_df_list['loc_country_raw'].explode().astype(str)
+
+            # Count the occurrences of each unique value
+            country_counts = country_list.value_counts()
+
+            country_counts=len(country_counts)
+
+
+
+
+
+
 
             # Replace these values with your actual PostgreSQL credentials
             db_url = 'postgresql://jonathanreardon:jonpass@localhost/linux'
@@ -255,12 +279,15 @@ def upload_json(request):
             student_gender['name'] = student_gender['name'].str.replace("'", '"')
 
             # Use the modified data dictionary
-            print(student_gender)
             student_gender['name'] = student_gender['name'].str.replace(r'"', '')
-
             student_gender = student_gender.to_json(orient='records')
 
-            print(student_gender)
+
+
+
+            
+
+
 
             # Pass contentx to template for rendering
             context = {'form': form, 
@@ -270,7 +297,9 @@ def upload_json(request):
                        'edu_setting_levels': edu_setting_levels,
                        'smd_combined_csv': smd_combined_csv,
                        'student_gender': student_gender,
-                       'study_num': study_num}
+                       'study_num': study_num,
+                       'country_counts': country_counts,
+                       'tool_smd_count': tool_smd_count}
 
             return render(request, 'upload_json.html', context)
 

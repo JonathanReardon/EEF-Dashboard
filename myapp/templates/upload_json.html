@@ -34,13 +34,31 @@
     #example_wrapper {
       visibility: hidden;
     }
+
+    .counter {
+      visibility: hidden;
+    }
     table {
-      font-size: 13px;
+      font-size: .775em;
       font-weight: 200;
+      background-color: #ffffff;
     }
-    table.dataTable thead th {
+    {% comment %} table.dataTable thead th {
       background-color: #E9ECEF;
+    } {% endcomment %}
+
+    #table-container, #example, #example th, #example td {
+      background-color: white !important ;
     }
+
+    #table-container2, #example, #example th, #example td {
+      background-color: white !important ;
+    }
+    
+    #example th:first-child.text-left, #example td:first-child.text-left {
+      background-color: white !important;
+    }
+
     #example tbody tr:nth-of-type(odd),
     #example tbody tr:nth-of-type(even) {
         background-color: unset;
@@ -67,25 +85,21 @@
     }
 
 
-    #table-container table thead th {
-      background-color: #f3f3f3;
+    #table-container #table-container2 table thead th {
+      background-color: #f7f7f7;
       color: #666;
-      font-size: .875em;
+      font-size: 1em;
       font-family: 'Lato', sans-serif;
-
     }
-    #table-container table tbody {
-      font-family: 'Lato', sans-serif;
 
-    }
-    .text-left {
+    .text-left td{
       text-align: left !important;
       white-space: nowrap;
     }
-    .buttons-collection .dt-button:first-child {
+    {% comment %} .buttons-collection .dt-button:first-child {
       background-color: red !important;
       color: white !important;
-    }
+    } {% endcomment %}
     .buttons-csv {
       background-color: #0c6cfc; !important;
       color: white !important;
@@ -106,16 +120,9 @@
       stroke: #000000;
       stroke-width: 2px;
     }
-    #chart-wrapper {
-      display: flex;
-      flex-direction: row;
-    }
-  
-    #chart-level-assign,
-    #chart-edu-setting
-    #chart-smd-scatter {
-      width: 33.33%;
-    }
+
+
+
 
 
     #example th:nth-child(1) {
@@ -174,7 +181,7 @@
     #example th:nth-child(14) {
       min-width: 80px;
       width: 80px;
-    }a
+    }
     #example th:nth-child(15) {
         min-width: 80px;
         width: 80px;
@@ -214,15 +221,7 @@
       height: 100px;
   }
 
-  #chart-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 50px;
-    background: #FFFFFF;
-    padding-top: 25px;
-    padding-bottom: 50px;
-  }
+
   #chart-level-assign {
     width: 33.33%;
     margin: 0;
@@ -238,6 +237,38 @@
     margin: 0;
     padding: 0;
   }
+
+  #table-container2{
+    color: #000000;
+    width: 70%;
+    float: left;
+  }
+
+  #chart-wrapper {
+    width: 28%;
+    float: right;
+    height: 580px;
+    display: flex;
+    flex-direction: column;
+    background: #f7f7f7;
+    margin-top: 30px;
+  }
+  
+  #chart-level-assign,
+  #chart-edu-setting {
+    width: 100%;
+    height: 50%;
+    transform: scale(0.7); /* adjust the scaling as needed */
+    transform-origin: top left;
+    margin: 0;
+    padding: 0;
+  }
+
+  #chart-wrapper svg rect {
+    fill: white !important;
+  }
+
+
 
   </style>
 </head>
@@ -285,7 +316,7 @@
                 <div class="col-lg-3 d-flex justify-content-center">
               <div class="single">
                 <div class="inner">
-                  <h3 class="count counter">11</h3>
+                  <h3 class="count counter">{{ country_counts }}</h3>
                   <p class="text">Countries</p>
                 </div>
               </div>
@@ -294,7 +325,7 @@
             <div class="col-lg-3 d-flex justify-content-center">
               <div class="single">
                 <div class="inner">
-                  <h3 class="count counter">234</h3>
+                  <h3 class="count counter">{{ tool_smd_count }}</h3>
                   <p class="text">Effect sizes</p>
                 </div>
               </div>
@@ -350,7 +381,7 @@
               <tbody>
                 {% for data_object in data %}
                 <tr>
-                  <th>{{ forloop.counter }}</th>
+                  <td class="text-left">{{ forloop.counter }}</td>
                   <td>{{ data_object.eppi_id }}</td>
                   <td>{{ data_object.admin_strand_data }}</td>
                   <td>{{ data_object.loc_country_raw }}</td>
@@ -379,29 +410,57 @@
         </div>
         {% endif %}
 
-        <div id="chart-wrapper">
-          <div id="chart-level-assign"></div>
-          <div id="chart-edu-setting"></div>
-          <div id="chart-smd-scatter"></div>
+        <br><br>
+        <div class="block-title text-center">
+          <h2 class="title">Situational Variables</h2>
         </div>
         <br>
-        <div id="chart-gender-pie"></div>
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </p>
+        <br>
 
-        <br>
-        <br>
-        <br>test
+        <div class="chart-wrapper-bar" id="chart-wrapper">
+          <div id="chart-level-assign"></div>
+          <div id="chart-edu-setting"></div>
+        </div>
+
+        <div id="table-container2">
+          <table id="example2" class="display hover responsive">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>EPPI ID</th>
+                <th>Author</th>
+                <th>Educational Setting</th>
+                <th>Level of Assignment</th>
+              </tr>
+            </thead>
+              <tbody>
+                {% for data_object in data %}
+                <tr>
+                  <td class="text-left">{{ forloop.counter }}</td>
+                  <td>{{ data_object.eppi_id }}</td>
+                  <td>{{ data_object.short_title }}</td>
+                  <td>{{ data_object.edu_setting_data }}</td>
+                  <td>{{ data_object.level_assign }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="3">No data to display.</td>
+                </tr>
+                  {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+
 
       <script type="text/javascript">
         $(document).ready(function() {
           $('form').submit(function() {
             // Show the loading indicator
             $('#loading-indicator').css('display', 'block');
-          });
-        
-          // Setup - add a text input to each footer cell
-          $('#table-container tfoot th').each(function() {
-            var title = $(this).text();
-            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
           });
         
           // DataTable
@@ -431,21 +490,40 @@
             ],
             columnDefs: [
               { targets: [5,7,8,9,10,11], visible: false },
-              { width: '60px', targets: 0, className: 'text-left' },
+              { width: '60px', targets: 0, className: 'text-left'},
             ],
             initComplete: function() {
               $('#loading-indicator').css('display', 'none');
               $('#example_wrapper').css('visibility', 'visible');
         
-              // Apply the search to each column
-              this.api().columns().every(function() {
-                var that = this;
-                $('input', this.footer()).on('keyup change clear', function() {
-                  if (that.search() !== this.value) {
-                    that.search(this.value).draw();
-                  }
-                });
-              });
+            }
+          });
+        });
+      </script>
+
+      <script type="text/javascript">
+        $(document).ready(function() {
+          $('form').submit(function() {
+            // Show the loading indicator
+            $('#loading-indicator').css('display', 'block');
+          });
+        
+          // DataTable
+          var table = $('#table-container2 table').DataTable({
+            stripeClasses: [],
+            searchable: true,
+            colReorder: true,
+            fixedColumns: false,
+            responsive: false,
+            paging: true,
+            scrollY: '40vh',
+            scrollX: false,
+            autoWidth: true,
+            pageLength: 15,
+            dom: 'Bfrtip',
+            initComplete: function() {
+              $('#loading-indicator').css('display', 'none');
+              $('#example_wrapper').css('visibility', 'visible');
             }
           });
         });
@@ -472,39 +550,7 @@
         const data2 = edu_setting_rawData.map(d => ({edu_setting: d[0], count: d[1]}));
         createChart(data2, "chart-edu-setting", "Educational Setting", "edu_setting");
 
-        // Third chart
-        const data3 = "{{ smd_combined_csv|escapejs }}";
-        const smd = d3.csvParse(data3).filter(d => d.smd_value !== "NA");
-        
-        const formattedData = smd.map(d => ({
-          smd_value: parseFloat(d.smd_value).toFixed(2),
-          sesmd_value: parseFloat(d.sesmd_value).toFixed(2)
-        }));
-        drawDotChart(formattedData);
-
-
-
-
-
-        // Fourth chart
-        const data4 = JSON.parse('{{ student_gender|safe }}');
-        console.log(typeof(data4));
-        console.log(data4);
-
-        // select the div element to append the svg
-        const container = d3.select('#chart-gender-pie');
-
-        chart = PieChart(data4, {
-          name: d => d.name,
-          value: d => d.value,
-          width: 740,
-          height: 500,
-          innerRadius: 100,
-          labelRadius: (100 * 1.4 + (Math.min(width, height) / 2) * 1),
-        })
-        
-
-        document.body.appendChild(chart);
+        {% comment %} document.body.appendChild(chart); {% endcomment %}
 
       </script>
 
@@ -512,20 +558,21 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
       <script>
         $(document).ready(function() {
-          // Call the Counter-Up plugin with the right options
-          $('.counter').counterUp({
+          // Show the counter element and start the Counter-Up plugin with the right options
+          $('.counter').css('visibility', 'visible').counterUp({
             delay: 10,
             time: 1000
           });
-      
+        
           // Trigger the Counter-Up animation when the element comes into view
           $('.count').waypoint(function() {
-            $('.counter').counterUp({
+            $('.counter').css('visibility', 'visible').counterUp({
               delay: 10,
               time: 1000
             });
           }, { offset: '100%' });
         });
+        
       </script>
 </body>
 </html>
